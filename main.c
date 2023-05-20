@@ -1,11 +1,17 @@
+/*
+ * File: builtin
+ * Authors: Alhassan Abukari Wunpini
+ *       Ruth Akinbami
+ */
 #include "shell.h"
 
-/*
- * Prog: Main Entry Point of the Program
- * Sig Handler: This Prints a new prompt upon a signal
- * @sig: This is the signal
- */
+void sig_handler(int sig);
+int execute(char **args, char **front);
 
+/**
+ * sig_handler - This Prints a new prompt upon a signal.
+ * @sig: signal.
+ */
 void sig_handler(int sig)
 {
 	char *new_prompt = "\n$ ";
@@ -16,14 +22,13 @@ void sig_handler(int sig)
 }
 
 /**
- * execute - This Executes a command in a child process.
- * @args: Is An array of arguments.
- * @front: Is A double pointer to the beginning of args.
+ * execute - This executes a command in a child process.
+ * @args: This is an array of arguments.
+ * @front: This is a double pointer to the beginning of args.
  *
- * Return: If error occurs - a corresponding error code.
+ * Return: If an error occurs - a corresponding error code.
  *         O/w - The exit value of the last executed command.
  */
-
 int execute(char **args, char **front)
 {
 	pid_t child_pid;
@@ -36,82 +41,64 @@ int execute(char **args, char **front)
 		command = get_location(command);
 	}
 
-	if (access(command, F_OK) == -1)
+	if (!command || (access(command, F_OK) == -1))
 	{
 		if (errno == EACCES)
+			ret = (create_error(args, 126));
+		else
+			ret = (create_error(args, 127));
+	}
+	else
+	{
+		child_pid = fork();
+		if (child_pid == -1)
 		{
-			ret = create_error(args, 126);
+			if (flag)
+				free(command);
+			perror("Error child:");
+			return (1);
+		}
+		if (child_pid == 0)
+		{
+			execve(command, args, environ);
+			if (errno == EACCES)
+				ret = (create_error(args, 126));
+			free_env();
+			free_args(args, front);
+			free_alias_list(aliases);
+			_exit(ret);
 		}
 		else
 		{
-			ret = create_error(args, 127);
-    		}
-	} 
-	else
-	{
-		if (ret == 0) {
-			child_pid = fork();
-			
-			if (child_pid == -1)
-			{
-				if (flag)
-				{
-				
-					free(command);
-					perror("Error child:");
-					return 1;
-			
-				}
-			}
-			
-			if (child_pid == 0)
-			{
-				execve(command, args, environ);
-				
-				if (errno == EACCES)
-					ret = create_error(args, 126);
-				free_env();
-				free_args(args, front);
-				free_alias_list(aliases);
-				_exit(ret);
-			}
-			else 
-			{
-				wait(&status);
-				ret = WEXITSTATUS(status);
-			}
+			wait(&status);
+			ret = WEXITSTATUS(status);
 		}
 	}
 	if (flag)
-	{
 		free(command);
-	}
-
-	return ret;
+	return (ret);
 }
 
 /**
- * main - This  Runs a simple UNIX command interpreter.
- * @argc: number of arguments supplied to the program.
- * @argv: This is an array of pointers to the arguments.
+ * main - This Runs a simple UNIX command interpreter.
+ * @argc:  number of arguments supplied to the program.
+ * @argv: array of pointers to the arguments.
  *
  * Return: return value of the last executed command.
  */
-
 int main(int argc, char *argv[])
 {
-	name = argv[0];
-	hist = 1;
-	signal(SIGINT, sig_handler);
-	aliases = NULL; 
-	*exe_ret 0;
-	
-	environ = _copyenv();
-
 	int ret = 0, retn;
 	int *exe_ret = &retn;
 	char *prompt = "$ ", *new_line = "\n";
-		
+
+	name = argv[0];
+	hist = 1;
+	aliases = NULL;
+	signal(SIGINT, sig_handler);
+
+	*exe_ret = 0;
+	environ = _copyenv();
 	if (!environ)
 		exit(-100);
 
