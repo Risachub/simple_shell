@@ -1,4 +1,4 @@
-#include "shell."
+#include "shell.h"
 
 
 int check_args(char **args);
@@ -26,7 +26,7 @@ int check_args(char **args)
 	for (i = 0; args[i]; i++)
 	{
 		current = args[i];
-		if (current[0] == ';' || current[0] == '&' || curentr[0] == '|')
+		if (current[0] == ';' || current[0] == '&' || current[0] == '|')
 		{
 			if (i == 0 || current[1] == ';')
 				return (create_error(&args[i], 2));

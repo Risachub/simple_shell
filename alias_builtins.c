@@ -60,7 +60,7 @@ int shellby_alias(char **args, char __attribute__((__unused__)) **front)
 		{
 			while (temp)
 			{
-				if (_strcmp(args[i], temp->name) == 0)
+				if (_strcmp(args[index], temp->name) == 0)
 				{
 					print_alias(temp);
 					break;
@@ -114,4 +114,45 @@ void set_alias(char *var_name, char *value)
 	}
 	if (!temp)
 		add_alias_end(&aliases, var_name, new_value);
+}
+
+/**
+ * replace_aliases - this scans through the arguments and replaces
+ * any matching alias with their value.
+ * @args: 2D pointer to the arguments.
+ *
+ * Return: 2D pointer to the arguments.
+ */
+char **replace_aliases(char **args)
+{
+	alias_t *temp;
+	int index;
+	char *new_value;
+
+	if (_strcmp(args[0], "alias") == 0)
+		return (args);
+	for (index = 0; args[index]; index++)
+	{
+		temp = aliases;
+		while (temp)
+		{
+			if (_strcmp(args[index], temp->name) == 0)
+			{
+				new_value = malloc(sizeof(char) * (_strlen(temp->value) + 1));
+				if (!new_value)
+				{
+					free_args(args, args);
+					return (NULL);
+				}
+				_strcpy(new_value, temp->value);
+				free(args[index]);
+				args[index] = new_value;
+				index--;
+				break;
+			}
+			temp = temp->next;
+		}
+	}
+
+	return (args);
 }
