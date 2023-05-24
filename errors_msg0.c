@@ -9,7 +9,7 @@ char *error_1(char **args);
 
 
 /**
- * error_2_syntax - This creates an error message for 
+ * error_2_syntax - This creates an error message for
  * our syntax errors.
  * @args: array of arguments passed to the command.
  *
@@ -18,7 +18,7 @@ char *error_1(char **args);
 
 char *error_2_syntax(char **args)
 {
-	int len; 
+	int len;
 	char *error, *hist_str;
 
 
@@ -49,7 +49,7 @@ char *error_2_syntax(char **args)
 
 /**
  * error_2_cd - This will create an error message
- * 		for shellby_cd errors.
+ * for shellby_cd errors.
  * @args: array of arguments passed to the command.
  *
  * Return: error string.
@@ -93,7 +93,7 @@ char *error_2_cd(char **args)
 
 /**
  * error_2_exit - This will Create an error message
- * 		 for shellby_exit errors.
+ * for shellby_exit errors.
  * @args: array of arguments passed to the command.
  *
  * Return: error string.
@@ -102,7 +102,7 @@ char *error_2_cd(char **args)
 
 char *error_2_exit(char **args)
 {
-	int len; 
+	int len;
 	char *error, *hist_str;
 
 	hist_str = _itoa(hist);
@@ -131,7 +131,7 @@ char *error_2_exit(char **args)
 
 /**
  * error_env - This will create an error message
- * 		 for shellby_env errors.
+ * for shellby_env errors.
  * @args: array of arguments passed to the command.
  *
  * Return: error string.
@@ -140,7 +140,7 @@ char *error_2_exit(char **args)
 char *error_env(char **args)
 {
 
-	int len; 
+	int len;
 	char *error, *hist_str;
 
 
@@ -171,7 +171,7 @@ char *error_env(char **args)
 
 /**
  * error_1 - This will create an error message
- * 		 for shellby_alias errors.
+ * for shellby_alias errors.
  * @args: array of arguments passed to the command.
  *
  * Return: error string.
@@ -181,7 +181,7 @@ char *error_env(char **args)
 char *error_1(char **args)
 {
 
-	int len; 
+	int len;
 	char *error;
 
 	len = _strlen(name) + _strlen(args[0]) + 13;

@@ -1,13 +1,12 @@
 #include "shell.h"
 
-
 char *error_126(char **args);
 char *error_127(char **args);
 
 
 /**
  * error_126 - This will create an error message
- * 		 for permission denied failures.
+ * for permission denied failures.
  * @args: array of arguments passed to the command.
  *
  * Return: error string.
@@ -16,7 +15,7 @@ char *error_127(char **args);
 
 char *error_126(char **args)
 {
-	int len; 
+	int len;
 	char *error, *hist_str;
 
 	hist_str = _itoa(hist);
@@ -45,7 +44,7 @@ char *error_126(char **args)
 
 /**
  * error_127 - This will create an error message
- * 		 for command not found failures.
+ * for command not found failures.
  * @args: array of arguments passed to the command.
  *
  * Return: error string.
@@ -54,7 +53,7 @@ char *error_126(char **args)
 char *error_127(char **args)
 {
 
-	int len; 
+	int len;
 	char *error, *hist_str;
 
 	hist_str = _itoa(hist);

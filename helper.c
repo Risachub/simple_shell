@@ -105,11 +105,10 @@ void free_args(char **args, char **front)
 
 char *get_env_value(char *beginning, int len)
 {
-
 	char **var_addr;
 	char *replacement = NULL, *temp, *var;
-	var = malloc(len + 1);
 
+	var = malloc(len + 1);
 
 	var = malloc(len + 1);
 	if (!var)
