@@ -13,14 +13,14 @@ alias_t *add_alias_end(alias_t **head, char *name, char *value);
 
 void free_list(list_t *head)
 {
-	list_t *nex;
+	list_t *next;
 
 	while (head)
 	{
-		nex = head->nex;
+		next = head->next;
 		free(head->dir);
 		free(head);
-		head = nex;
+		head = next;
 	}
 }
 
@@ -31,15 +31,15 @@ void free_list(list_t *head)
 
 void free_alias_list(alias_t *head)
 {
-	alias_t *nex;
+	alias_t *next;
 
 	while (head)
 	{
-		nex = head->nex;
+		next = head->next;
 		free(head->name);
 		free(head->value);
 		free(head);
-		head = nex;
+		head = next;
 	}
 }
 
